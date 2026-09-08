@@ -1,18 +1,45 @@
-<div align="center">
+# AI Setup
 
-# ⚡ AI-Setup
+![AI Setup: Проект → Анализ → Проверка](docs/assets/repository-cover.svg)
 
-### Автоматическая настройка AI-конфигов для вашего проекта
+**CLI-инструмент.** Анализ структуры проекта, оценка AI-документации и генерация конфигураций. Отдельный Codex-only режим CLI пока не реализован.
 
-**Одна команда — и Claude Code, Cursor, Codex, Copilot понимают ваш проект.**
+<!-- repository-guide:start -->
+[Первый запуск](#readme-start) · [Что внутри](#readme-map) · [Путеводитель](docs/repository-guide.md#start) · [Карта кода](docs/repository-guide.md#map) · [Проверки](docs/repository-guide.md#checks) · [Границы и права](docs/repository-guide.md#boundaries)
 
-[![npm](https://img.shields.io/badge/npm-@eclipse--forge/ai--setup-cb3837?style=for-the-badge&logo=npm)](https://npmjs.com/package/@eclipse-forge/ai-setup)
-[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
-[![MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+<a id="readme-map"></a>
 
-</div>
+## Проект за минуту
 
----
+- **[Анализ проекта](<src/analyzer.ts>)** — Определение стека и структуры исходников.
+- **[Оценка конфигураций](<src/scorer.ts>)** — Детерминированная оценка существующей документации.
+- **[Генераторы](<src/generator.ts>)** — Генерация разных AI-конфигураций; Codex-only режим CLI ещё не выделен.
+
+<a id="readme-start"></a>
+
+## Начать локально
+
+**Среда:** Node.js и npm. **Источник:** [src/cli.ts](<src/cli.ts>).
+
+Из корня клонированного репозитория:
+
+```bash
+npm ci
+npm run dev -- --help
+```
+
+Открывается только справка. В CLI нет Codex-only флага: `init` создаёт четыре конфигурации, `refresh` перезаписывает их. В Eclipse эти команды не применяются к рабочим проектам.
+
+<details>
+<summary><strong>Перед первым запуском и изменением кода</strong></summary>
+
+- Команды сверены с исходниками 8 сентября 2026. Это инструкция, а не отметка об успешном запуске или текущем production.
+- Установка зависимостей может обращаться в registry и выполнять lifecycle scripts. Используйте отдельную рабочую среду и демонстрационные данные.
+- init создаёт несколько AI-конфигураций, refresh перезаписывает их. В Eclipse используются справка и чтение оценки; генерация в рабочие проекты требует отдельного Codex-only режима и review.
+
+
+</details>
+<!-- repository-guide:end -->
 
 ## Что это?
 
@@ -25,7 +52,14 @@ AI-Setup сканирует ваш проект и автоматически г
 | `AGENTS.md` | Codex / Multi-agent — определения агентов |
 | `.github/copilot-instructions.md` | GitHub Copilot — инструкции |
 
-## Быстрый старт
+## Режим Eclipse: только Codex
+
+> [!IMPORTANT]
+> В опубликованном CLI нет Codex-only флага: `init` создаёт четыре AI-конфига, `refresh` перезаписывает их. В рабочих проектах Eclipse используйте только справку и чтение оценки; генерация требует отдельного фильтра и review. Отсутствие Claude-конфигурации намеренное, исправлять его ради баллов не нужно.
+
+Для локальной справки: `npm ci`, затем `npm run dev -- --help`. Для оценки: `npm run dev -- score --path ../example-project`. Сетевой reverse-режим, npm test и typecheck в этой опубликованной версии отсутствуют.
+
+## Возможности генерации (не запускать в рабочих проектах Eclipse)
 
 ```bash
 # В корне вашего проекта:
